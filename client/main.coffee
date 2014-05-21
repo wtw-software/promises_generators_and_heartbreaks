@@ -6,8 +6,6 @@ create     = require '../lib/create'
 get = Promise.promisify superagent.get
 
 
-
-
 countCharacters = (prev, curr) ->
   new Promise (resolve) ->
     setTimeout -> 
@@ -25,7 +23,6 @@ translate = (text) ->
 documentNames = [ 'lucy', 'esme', 'mary' ]
 
 
-
 documents = Promise.map documentNames, (name) -> get("/api/document/#{name}").get 'body'
                    .map (body) -> new Document name: body.name, content: body.content
 
@@ -34,11 +31,9 @@ translatedDocuments = documents.map (document) ->
   .then (translation) -> new Document name: document.name, content: translation
 
 
-
 contentLength = documents.reduce countCharacters, 0
 
 translatedContentLength = translatedDocuments.reduce countCharacters, 0
-
 
 
 
